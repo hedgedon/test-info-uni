@@ -124,6 +124,7 @@ export default function ThemeProvider({ children }: { children: React.ReactNode 
 
   const themeObject = useMemo(() => theme(darkMode), [darkMode])
 
+  // @ts-ignore
   return <StyledComponentsThemeProvider theme={themeObject}>{children}</StyledComponentsThemeProvider>
 }
 

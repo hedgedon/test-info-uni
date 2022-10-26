@@ -30,10 +30,12 @@ export async function splitQuery<Type>(
         query: query(...vars, sliced),
         fetchPolicy: 'network-only',
       })
+      // @ts-ignore
       fetchedData = {
         ...fetchedData,
         ...result.data,
       }
+      // @ts-ignore
       if (Object.keys(result.data).length < skipCount || skip + skipCount > values.length) {
         allFound = true
       } else {
