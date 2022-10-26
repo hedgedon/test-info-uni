@@ -226,6 +226,7 @@ const Search = ({ ...rest }: React.HTMLAttributes<HTMLDivElement>) => {
   )
 
   return (
+    // @ts-ignore
     <Hotkeys keyName="command+/" onKeyDown={handleDown}>
       {showMenu ? <Blackout /> : null}
       <Container>

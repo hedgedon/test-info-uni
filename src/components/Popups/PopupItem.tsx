@@ -68,14 +68,15 @@ export default function PopupItem({
       clearTimeout(timeout)
     }
   }, [removeAfterMs, removeThisPopup])
-
+  // @ts-ignore
   const theme = useContext(ThemeContext)
 
   let popupContent
   if ('txn' in content) {
+    // @ts-ignore
     const {
       txn: { hash, success, summary },
-    } = content
+    } = content as any
     popupContent = <TransactionPopup hash={hash} success={success} summary={summary} />
   } else if ('listUpdate' in content) {
     const {

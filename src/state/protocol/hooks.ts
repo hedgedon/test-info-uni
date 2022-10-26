@@ -1,15 +1,16 @@
 import {
-    updateProtocolData,
-    updateChartData,
-    updateTransactions,
-    updateTransactionsGfx,
-    updateTopTokensGfx, updateTopPoolsGfx,
+  updateProtocolData,
+  updateChartData,
+  updateTransactions,
+  updateTransactionsGfx,
+  updateTopTokensGfx,
+  updateTopPoolsGfx,
 } from './actions'
 import { AppState, AppDispatch } from './../index'
 import { ProtocolData } from './reducer'
 // import { PoolData, Pool } from '../pools/reducer'
 import { PoolData } from '../pools/reducer'
-import { Pool } from "types"
+import { Pool } from 'types'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ChartDayData, Transaction, TransactionTest, Token } from 'types'
@@ -121,37 +122,41 @@ export function useProtocolTopTokensGfx(): [TokenData[] | undefined, (topTokens:
 }
 
 export function useProtocolTopPools(): [PoolData[] | undefined, (topPools: Pool[]) => void] {
-    const [activeNetwork] = useActiveNetworkVersion()
-    const topPools: Pool[] | undefined = useSelector((state: AppState) => state.protocol[activeNetwork.id]?.topPools)
-    const dispatch = useDispatch<AppDispatch>()
+  const [activeNetwork] = useActiveNetworkVersion()
+  const topPools: Pool[] | undefined = useSelector((state: AppState) => state.protocol[activeNetwork.id]?.topPools)
+  const dispatch = useDispatch<AppDispatch>()
 
-    const setTopPools: (topPools: Pool[]) => void = useCallback(
-        (topPools: Pool[]) =>
-            dispatch(
-                updateTopPoolsGfx({
-                    topPools,
-                    networkId: activeNetwork.id,
-                })
-            ), [activeNetwork.id, dispatch])
+  const setTopPools: (topPools: Pool[]) => void = useCallback(
+    (topPools: Pool[]) =>
+      dispatch(
+        updateTopPoolsGfx({
+          topPools,
+          networkId: activeNetwork.id,
+        })
+      ),
+    [activeNetwork.id, dispatch]
+  )
 
-    //we need to map our data, to match the PoolData[] from pools/reducer.ts
+  //we need to map our data, to match the PoolData[] from pools/reducer.ts
 
-    const topPoolsData = topPools?.map((s) => ({
+  const topPoolsData = topPools?.map(
+    (s) =>
+      ({
         address: s.id,
         feeTier: parseInt(s.feeTier),
         token0: {
-            name: s.token0.name,
-            symbol: s.token0.symbol,
-            address: s.token0.id,
-            decimals: parseInt(s.token0.decimals),
-            derivedETH: 0
+          name: s.token0.name,
+          symbol: s.token0.symbol,
+          address: s.token0.id,
+          decimals: parseInt(s.token0.decimals),
+          derivedETH: 0,
         },
         token1: {
-            name: s.token1.name,
-            symbol: s.token1.symbol,
-            address: s.token1.id,
-            decimals: parseInt(s.token1.decimals),
-            derivedETH: 0
+          name: s.token1.name,
+          symbol: s.token1.symbol,
+          address: s.token1.id,
+          decimals: parseInt(s.token1.decimals),
+          derivedETH: 0,
         },
         liquidity: 0,
         sqrtPrice: 0,
@@ -164,9 +169,9 @@ export function useProtocolTopPools(): [PoolData[] | undefined, (topPools: Pool[
         token0Price: 0,
         token1Price: 0,
         tvlToken0: 0,
-        tvlToken1: 0
-    } as PoolData)
-    )
+        tvlToken1: 0,
+      } as PoolData)
+  )
 
-    return [topPoolsData, setTopPools]
+  return [topPoolsData, setTopPools]
 }

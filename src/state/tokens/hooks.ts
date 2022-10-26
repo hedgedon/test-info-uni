@@ -23,7 +23,6 @@ import utc from 'dayjs/plugin/utc'
 import { useActiveNetworkVersion, useClients } from 'state/application/hooks'
 import { fetchPoolTransactionsGfx } from '../../data/pools/transactionsGfx'
 import { updatePoolTransactionsGfx } from '../pools/actions'
-import { fetchTopTokens } from '../../data/protocol/transactions'
 // format dayjs with the libraries that we need
 dayjs.extend(utc)
 

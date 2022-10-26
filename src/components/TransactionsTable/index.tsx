@@ -139,7 +139,7 @@ export default function TransactionTable({
   maxItems?: number
   color?: string
 }) {
-  console.log('LOGGING TX DATA FROM TABLE:', transactions);
+  console.log('LOGGING TX DATA FROM TABLE:', transactions)
   // theming
   const theme = useTheme()
 
@@ -216,7 +216,7 @@ export default function TransactionTable({
             </SortText>
             <SortText
               onClick={() => {
-                setTxFilter(TransactionType.SWAP);
+                setTxFilter(TransactionType.SWAP)
               }}
               active={txFilter === TransactionType.SWAP}
             >
@@ -232,7 +232,7 @@ export default function TransactionTable({
             </SortText>
             <SortText
               onClick={() => {
-                setTxFilter(TransactionType.BURN);
+                setTxFilter(TransactionType.BURN)
               }}
               active={txFilter === TransactionType.BURN}
             >

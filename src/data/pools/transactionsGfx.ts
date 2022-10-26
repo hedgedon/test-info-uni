@@ -1,6 +1,6 @@
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import gql from 'graphql-tag';
-import { PoolData, TransactionType, TransactionTest } from 'types';
+import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
+import gql from 'graphql-tag'
+import { PoolData, TransactionType, TransactionTest } from 'types'
 
 // TODO: update EXAMPLE QUERY
 const POOL_TRANSACTIONS_TEST = gql`

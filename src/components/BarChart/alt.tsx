@@ -84,8 +84,10 @@ const Chart = ({
   return (
     <Wrapper minHeight={minHeight} {...rest}>
       <RowBetween style={{ alignItems: 'flex-start' }}>
-        {topLeft ?? null}
-        {topRight ?? null}
+        <>
+          {topLeft ?? null}
+          {topRight ?? null}
+        </>
       </RowBetween>
       {data?.length === 0 ? (
         <LoadingRows>
@@ -120,6 +122,7 @@ const Chart = ({
             <Tooltip
               cursor={{ fill: theme.bg2 }}
               contentStyle={{ display: 'none' }}
+              // @ts-ignore
               formatter={(value: number, name: string, props: { payload: { time: string; value: number } }) => {
                 if (setValue && parsedValue !== props.payload.value) {
                   setValue(props.payload.value)
@@ -157,8 +160,10 @@ const Chart = ({
         </ResponsiveContainer>
       )}
       <RowBetween>
-        {bottomLeft ?? null}
-        {bottomRight ?? null}
+        <>
+          {bottomLeft ?? null}
+          {bottomRight ?? null}
+        </>
       </RowBetween>
     </Wrapper>
   )

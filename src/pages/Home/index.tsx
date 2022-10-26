@@ -7,7 +7,8 @@ import LineChart from 'components/LineChart/alt'
 import useTheme from 'hooks/useTheme'
 import {
   useProtocolChartData,
-  useProtocolData, useProtocolTopPools,
+  useProtocolData,
+  useProtocolTopPools,
   useProtocolTopTokensGfx,
   useProtocolTransactions,
   useProtocolTransactionsGfx,
@@ -59,9 +60,9 @@ export default function Home() {
   }
   const [topPools] = useProtocolTopPools()
   if (topPools) {
-    console.log("topPools:",topPools)
+    console.log('topPools:', topPools)
   } else {
-    console.log("topPools:", topPools)
+    console.log('topPools:', topPools)
   }
 
   const [volumeHover, setVolumeHover] = useState<number | undefined>()
@@ -266,7 +267,7 @@ export default function Home() {
         {/* TODO: replace */}
         {/*<PoolTable poolDatas={poolDatas} />*/}
 
-        { topPools ? <PoolTable poolDatas={topPools} /> : null}
+        {topPools ? <PoolTable poolDatas={topPools} /> : null}
 
         <RowBetween>
           <TYPE.main>Transactions</TYPE.main>

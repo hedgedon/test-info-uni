@@ -43,7 +43,7 @@ import { GenericImageWrapper } from 'components/Logo'
 // import { SmallOptionButton } from '../../components/Button'
 import { useCMCLink } from 'hooks/useCMCLink'
 import CMCLogo from '../../assets/images/cmc.png'
-import {useToken} from "../../hooks/Tokens";
+import { useToken } from '../../hooks/Tokens'
 
 const PriceText = styled(TYPE.label)`
   font-size: 36px;

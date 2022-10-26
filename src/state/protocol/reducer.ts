@@ -4,7 +4,8 @@ import {
   updateChartData,
   updateTransactions,
   updateTransactionsGfx,
-  updateTopTokensGfx, updateTopPoolsGfx,
+  updateTopTokensGfx,
+  updateTopPoolsGfx,
 } from './actions'
 import { createReducer } from '@reduxjs/toolkit'
 import { ChartDayData, Transaction, Token, Pool } from 'types'

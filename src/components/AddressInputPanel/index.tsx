@@ -79,6 +79,7 @@ export default function AddressInputPanel({
 }) {
   const [activeNetwork] = useActiveNetworkVersion()
   const { chainId } = useActiveWeb3React()
+  // @ts-ignore
   const theme = useContext(ThemeContext)
 
   const { address, loading, name } = useENS(value)

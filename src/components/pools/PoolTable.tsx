@@ -153,7 +153,7 @@ export default function PoolTable({ poolDatas, maxItems = MAX_ITEMS }: { poolDat
   )
 
   if (!poolDatas) {
-    console.log("NO poolDatas from PoolTable.tsx")
+    console.log('NO poolDatas from PoolTable.tsx')
     return <Loader />
   }
 

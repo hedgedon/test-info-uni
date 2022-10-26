@@ -4,7 +4,8 @@ import {
   useProtocolChartData,
   useProtocolTransactions,
   useProtocolTransactionsGfx,
-  useProtocolTopTokensGfx, useProtocolTopPools,
+  useProtocolTopTokensGfx,
+  useProtocolTopPools,
 } from './hooks'
 import { useEffect } from 'react'
 import { useFetchProtocolData } from 'data/protocol/overview'
@@ -12,8 +13,8 @@ import { useFetchGlobalChartData } from 'data/protocol/chart'
 import { fetchTopTransactions, fetchTopTransactionsGfx } from 'data/protocol/transactions'
 import { fetchTopTokens } from 'data/protocol/topTokens'
 import { useClients, useGfxClient } from 'state/application/hooks'
-import {fetchTopPools} from "../../data/pools/topPools";
-import {updateTopPoolsGfx} from "./actions";
+import { fetchTopPools } from '../../data/pools/topPools'
+import { updateTopPoolsGfx } from './actions'
 
 export default function Updater(): null {
   // this calls the useProtocolTransactions()
@@ -98,19 +99,19 @@ export default function Updater(): null {
   // TODO: add fetchTopPools call here
 
   useEffect(() => {
-   async function fetch() {
-     const topPoolsgfx = await fetchTopPools(gfxClient)
+    async function fetch() {
+      const topPoolsgfx = await fetchTopPools(gfxClient)
 
-     if (topPoolsgfx) {
-       console.log("top pools gfx exists:", topPoolsgfx)
-      updateTopPoolsGfx(topPoolsgfx)
-     }
-   }
+      if (topPoolsgfx) {
+        console.log('top pools gfx exists:', topPoolsgfx)
+        updateTopPoolsGfx(topPoolsgfx)
+      }
+    }
 
-   if (!topPools) {
-     console.log('no topPools..refetching')
-     fetch()
-   }
+    if (!topPools) {
+      console.log('no topPools..refetching')
+      fetch()
+    }
   }, [topPools, updateTopPoolsGfx, gfxClient])
 
   return null

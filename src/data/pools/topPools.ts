@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
-import { ApolloClient, NormalizedCacheObject, useQuery} from '@apollo/client'
+import { ApolloClient, NormalizedCacheObject, useQuery } from '@apollo/client'
 import gql from 'graphql-tag'
 import { useClients } from 'state/application/hooks'
 import { notEmpty } from 'utils'
 import { POOL_HIDE } from '../../constants'
-import {TokensResponse, Pool} from "../../types";
-import {TOP_TOKENS_GFX} from "../protocol/topTokens";
+import { TokensResponse, Pool } from '../../types'
+import { TOP_TOKENS_GFX } from '../protocol/topTokens'
 
 export const TOP_POOLS = gql`
   query topPools {
@@ -64,8 +64,8 @@ interface TopPoolsResponseGfx {
 }
 
 export const TOP_POOLS_GFX = gql`
-  query Pools{
-    pools{
+  query Pools {
+    pools {
       id
       feeTier
       token0 {
@@ -95,7 +95,7 @@ export async function fetchTopPools(client: ApolloClient<NormalizedCacheObject>)
       return undefined
     }
 
-    console.log("data.pools:", data.pools)
+    console.log('data.pools:', data.pools)
 
     return data.pools
   } catch {
