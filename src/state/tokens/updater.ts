@@ -1,31 +1,16 @@
-import { useAllTokenData, useUpdateTokenData, useAddTokenKeys, useUpdateTokenDatasTest } from './hooks'
+import { useAllTokenData, useUpdateTokenData, useAddTokenKeys } from './hooks'
 import { useEffect, useMemo } from 'react'
 import { useTopTokenAddresses } from '../../data/tokens/topTokens'
 import { useFetchedTokenDatas } from 'data/tokens/tokenData'
-import { useTopTokenAddressesGfxTest } from 'data/protocol/topTokens'
 
 export default function Updater(): null {
   // updaters
   const updateTokenDatas = useUpdateTokenData()
   const addTokenKeys = useAddTokenKeys()
 
-  const updateTokenDatasTest = useUpdateTokenDatasTest()
-
-  console.log('updater: updateTokenDatasTest:', updateTokenDatasTest)
-
   // intitial data
   const allTokenData = useAllTokenData()
   const { loading, error, addresses } = useTopTokenAddresses()
-
-  // testing with copy of gfx:
-  // might be uncessary
-  const { loading: l2, error: err2, addresses: addressesGfx } = useTopTokenAddressesGfxTest()
-  console.log('loading addressesGfx::', addressesGfx)
-  // useEffect(() => {
-  //   if (addressesGfx && !err2 && !l2) {
-
-  //   }
-  // })
 
   // add top pools on first load
   useEffect(() => {

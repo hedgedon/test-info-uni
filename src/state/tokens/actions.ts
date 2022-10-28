@@ -8,10 +8,6 @@ export const updateTokenData = createAction<{ tokens: TokenData[]; networkId: Su
   'tokens/updateTokenData'
 )
 
-export const updateTokenDatasTest = createAction<{ tokens: TokenData[]; networkId: SupportedNetwork }>(
-  'tokens/updateTokenDatasTest'
-)
-
 // add token address to byAddress
 export const addTokenKeys = createAction<{ tokenAddresses: string[]; networkId: SupportedNetwork }>(
   'tokens/addTokenKeys'

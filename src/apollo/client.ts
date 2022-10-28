@@ -21,7 +21,7 @@ export const blockClient = new ApolloClient({
 })
 
 export const client_gfx = new ApolloClient({
-  uri: 'http://localhost:8888/gql/query',
+  uri: 'https://cush.staging.gfx.town/gql/query',
   cache: new InMemoryCache({
     typePolicies: {
       Token: {

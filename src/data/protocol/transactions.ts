@@ -206,7 +206,7 @@ interface TransactionResultsTest {
 
 const GLOBAL_TRANSACTIONS_GFX = gql`
   query Transactions {
-    transactions(limit: 20) {
+    transactions(limit: 20, filter: { orderDirection: "DESC" }) {
       id
       blockNumber
       timestamp
@@ -290,6 +290,12 @@ const GLOBAL_TRANSACTIONS_GFX = gql`
   }
 `
 
+const convertDate = (dateStr: string): string => {
+  const date = new Date(dateStr)
+  const timestampInSeconds = Math.floor(date.getTime() / 1000)
+  return timestampInSeconds.toString()
+}
+
 export async function fetchTopTransactionsGfx(
   client: ApolloClient<NormalizedCacheObject>
 ): Promise<Transaction[] | undefined> {
@@ -308,7 +314,7 @@ export async function fetchTopTransactionsGfx(
         return {
           type: TransactionType.BURN,
           hash: t.id,
-          timestamp: t.timestamp,
+          timestamp: convertDate(m.timestamp),
           sender: m.owner, // owner is sender here.
           token0Symbol: m.token0.symbol,
           token1Symbol: m.token1.symbol,
@@ -324,7 +330,7 @@ export async function fetchTopTransactionsGfx(
         return {
           type: TransactionType.SWAP,
           hash: t.id,
-          timestamp: t.timestamp,
+          timestamp: convertDate(m.timestamp),
           sender: m.sender,
           token0Symbol: m.token0.symbol,
           token1Symbol: m.token1.symbol,
@@ -340,7 +346,7 @@ export async function fetchTopTransactionsGfx(
         return {
           type: TransactionType.MINT,
           hash: t.id,
-          timestamp: t.timestamp,
+          timestamp: convertDate(m.timestamp),
           sender: m.sender,
           token0Symbol: m.token0.symbol,
           token1Symbol: m.token1.symbol,

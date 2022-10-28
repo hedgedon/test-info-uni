@@ -6,10 +6,9 @@ import {
   updateChartData,
   updatePriceData,
   updateTransactions,
-  updateTokenDatasTest,
 } from './actions'
 import { createReducer } from '@reduxjs/toolkit'
-import { PriceChartEntry, Transaction, WhitelistPool } from 'types'
+import { PriceChartEntry, Transaction } from 'types'
 import { SupportedNetwork } from 'constants/networks'
 
 export type TokenData = {
@@ -87,16 +86,6 @@ export default createReducer(initialState, (builder) =>
           })
       )
     }) // add address to byAddress keys if not included yet
-    .addCase(updateTokenDatasTest, (state, { payload: { tokens, networkId } }) => {
-      tokens.map(
-        (tokenData) =>
-          (state.byAddress[networkId][tokenData.address] = {
-            ...state.byAddress[networkId][tokenData.address],
-            data: tokenData,
-            lastUpdated: currentTimestamp(),
-          })
-      )
-    })
     .addCase(addTokenKeys, (state, { payload: { tokenAddresses, networkId } }) => {
       tokenAddresses.map((address) => {
         if (!state.byAddress[networkId][address]) {

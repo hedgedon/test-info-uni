@@ -25,7 +25,7 @@ import BarChart from 'components/BarChart/alt'
 import { useAllPoolData } from 'state/pools/hooks'
 import { notEmpty } from 'utils'
 import TransactionsTable from '../../components/TransactionsTable'
-import { useAllTokenData, useTopTokensTest } from 'state/tokens/hooks'
+import { useAllTokenData } from 'state/tokens/hooks'
 import { TokenData } from 'state/tokens/reducer'
 import { MonoSpace } from 'components/shared'
 import { useActiveNetworkVersion, useClients } from 'state/application/hooks'
@@ -53,6 +53,9 @@ export default function Home() {
   const [protocolData] = useProtocolData()
   const [transactions] = useProtocolTransactions()
   const [transactionsGfx] = useProtocolTransactionsGfx()
+  if (transactionsGfx) {
+    console.log('transactions from gfx::', transactionsGfx)
+  }
 
   const [topTokens] = useProtocolTopTokensGfx()
   if (topTokens) {

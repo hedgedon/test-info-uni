@@ -8,6 +8,7 @@ import { notEmpty } from 'utils'
 import { useSavedTokens } from 'state/user/hooks'
 import { DarkGreyCard } from 'components/Card'
 import TopTokenMovers from 'components/tokens/TopTokenMovers'
+import { useProtocolTopTokensGfx } from '../../state/protocol/hooks'
 
 export default function TokensOverview() {
   useEffect(() => {
@@ -22,7 +23,10 @@ export default function TokensOverview() {
       .filter(notEmpty)
   }, [allTokens])
 
-  console.log('formattedTokens:', formattedTokens)
+  const [topTokens] = useProtocolTopTokensGfx()
+  if (topTokens) {
+    console.log('topTokens from TokensOverview:', topTokens)
+  }
 
   const [savedTokens] = useSavedTokens()
   const watchListTokens = useTokenDatas(savedTokens)
@@ -46,9 +50,11 @@ export default function TokensOverview() {
             </AutoColumn>
           </DarkGreyCard>
         </HideSmall>
-        {/* this is where we put the token data */}
         <TYPE.main>All Tokens</TYPE.main>
-        <TokenTable tokenDatas={formattedTokens} />
+
+        {/*<TokenTable tokenDatas={formattedTokens} />*/}
+
+        <TokenTable tokenDatas={topTokens} />
       </AutoColumn>
     </PageWrapper>
   )

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import {
   useTokenData,
-  usePoolsForTokenTest,
+  usePoolsForToken,
   useTokenChartData,
   useTokenPriceData,
   useTokenTransactions,
@@ -43,7 +43,6 @@ import { GenericImageWrapper } from 'components/Logo'
 // import { SmallOptionButton } from '../../components/Button'
 import { useCMCLink } from 'hooks/useCMCLink'
 import CMCLogo from '../../assets/images/cmc.png'
-import { useToken } from '../../hooks/Tokens'
 
 const PriceText = styled(TYPE.label)`
   font-size: 36px;
@@ -104,16 +103,8 @@ export default function TokenPage({
   }, [])
 
   const tokenData = useTokenData(address)
-  const poolsForToken = usePoolsForTokenTest(address) // fetches all Pools belonging to address
-  console.log('poolsForToken::', poolsForToken)
-
+  const poolsForToken = usePoolsForToken(address)
   const poolDatas = usePoolDatas(poolsForToken ?? [])
-  console.log('logging poolDatas here:::', poolDatas)
-
-  //TODO: test this and map the results to be PoolData[]
-  // const tokenDatasTest = useTokenDatasTest(poolsForToken ?? [])
-  // console.log('tokenDatasTest:', tokenDatasTest)
-
   const transactions = useTokenTransactions(address)
   const chartData = useTokenChartData(address)
 
@@ -395,7 +386,7 @@ export default function TokenPage({
                 </RowBetween> */}
               </DarkGreyCard>
             </ContentLayout>
-            <TYPE.main>Pools reeeeeeee</TYPE.main>
+            <TYPE.main>Pools</TYPE.main>
             <DarkGreyCard>
               <PoolTable poolDatas={poolDatas} />
             </DarkGreyCard>

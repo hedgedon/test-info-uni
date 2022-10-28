@@ -9,20 +9,17 @@ import {
   updateChartData,
   updatePriceData,
   updateTransactions,
-  updateTokenDatasTest,
 } from './actions'
 import { isAddress } from 'ethers/lib/utils'
-import { fetchPoolsForToken, fetchPoolsForTokenGfx } from 'data/tokens/poolsForToken'
+import { fetchPoolsForToken } from 'data/tokens/poolsForToken'
 import { fetchTokenChartData } from 'data/tokens/chartData'
 import { fetchTokenPriceData } from 'data/tokens/priceData'
 import { fetchTokenTransactions } from 'data/tokens/transactions'
-import { PriceChartEntry, Transaction, WhitelistPool } from 'types'
+import { PriceChartEntry, Transaction } from 'types'
 import { notEmpty } from 'utils'
 import dayjs, { OpUnitType } from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import { useActiveNetworkVersion, useClients } from 'state/application/hooks'
-import { fetchPoolTransactionsGfx } from '../../data/pools/transactionsGfx'
-import { updatePoolTransactionsGfx } from '../pools/actions'
 // format dayjs with the libraries that we need
 dayjs.extend(utc)
 
@@ -40,18 +37,6 @@ export function useUpdateTokenData(): (tokens: TokenData[]) => void {
   return useCallback(
     (tokens: TokenData[]) => {
       dispatch(updateTokenData({ tokens, networkId: activeNetwork.id }))
-    },
-    [activeNetwork.id, dispatch]
-  )
-}
-
-export function useUpdateTokenDatasTest(): (tokens: TokenData[]) => void {
-  const dispatch = useDispatch<AppDispatch>()
-  const [activeNetwork] = useActiveNetworkVersion()
-
-  return useCallback(
-    (tokens: TokenData[]) => {
-      dispatch(updateTokenDatasTest({ tokens, networkId: activeNetwork.id }))
     },
     [activeNetwork.id, dispatch]
   )
@@ -92,11 +77,8 @@ export function useTokenDatas(addresses: string[] | undefined): TokenData[] | un
 }
 
 export function useTokenData(address: string | undefined): TokenData | undefined {
-  console.log('fetching useTokenData for address:', address)
   const allTokenData = useAllTokenData()
   const addTokenKeys = useAddTokenKeys()
-
-  // console.log('useTokenData(): allTokenData:', allTokenData)
 
   // if invalid address return
   if (!address || !isAddress(address)) {
@@ -112,71 +94,33 @@ export function useTokenData(address: string | undefined): TokenData | undefined
   return allTokenData[address]?.data
 }
 
-export function useTopTokensTest(): any | undefined {
-  // const dispatch = useDispatch<AppDispatch>()
-  const [activeNetwork] = useActiveNetworkVersion()
-  // const token = useSelector((state: AppState) => state.tokens.byAddress[activeNetwork.id]?.[address])
-  // const poolsForToken = token.poolAddresses
-  const [error, setError] = useState(false)
-  // const [topTokens, setTopTokens] = useState()
-  // const { gfxClient } = useClients()
-
-  // console.log('usePoolsForToken():: token:', token)
-  // console.log('usePoolsForToken():: pools for token length:', poolsForToken?.length)
-}
-
 /**
  * Get top pools addresses that token is included in
  * If not loaded, fetch and store
  * @param address
  */
-export function usePoolsForTokenTest(address: string): string[] | undefined {
+export function usePoolsForToken(address: string): string[] | undefined {
   const dispatch = useDispatch<AppDispatch>()
   const [activeNetwork] = useActiveNetworkVersion()
   const token = useSelector((state: AppState) => state.tokens.byAddress[activeNetwork.id]?.[address])
   const poolsForToken = token.poolAddresses
   const [error, setError] = useState(false)
-  const { dataClient, gfxClient } = useClients()
-
-  console.log('usePoolsForToken():: token:', token)
-  console.log('usePoolsForToken():: pools for token length:', poolsForToken?.length)
-
-  // useEffect(() => {
-  //   async function fetch() {
-  //     const { loading, error, addresses } = await fetchPoolsForToken(address, dataClient)
-  //     if (!loading && !error && addresses) {
-  //       console.log(`token Address: ${address}, pools: ${addresses.length}`)
-  //       dispatch(addPoolAddresses({ tokenAddress: address, poolAddresses: addresses, networkId: activeNetwork.id }))
-  //     }
-  //     if (error) {
-  //       setError(error)
-  //     }
-  //   }
-  //   if (!poolsForToken && !error) {
-  //     fetch()
-  //   }
-  // }, [address, dispatch, error, poolsForToken, dataClient, activeNetwork.id])
+  const { dataClient } = useClients()
 
   useEffect(() => {
-    const fetchTest = async () => {
-      // TODO: try getting GFX data
-      const { loading, error, addresses } = await fetchPoolsForTokenGfx(address, gfxClient)
-      console.log('logging asdf:', addresses) // why is this constantly giving me WBTC addresses
+    async function fetch() {
+      const { loading, error, addresses } = await fetchPoolsForToken(address, dataClient)
       if (!loading && !error && addresses) {
         dispatch(addPoolAddresses({ tokenAddress: address, poolAddresses: addresses, networkId: activeNetwork.id }))
       }
-
       if (error) {
         setError(error)
       }
     }
-
-    // const pls = fetchTest()
-
     if (!poolsForToken && !error) {
-      fetchTest()
+      fetch()
     }
-  }, [address, dispatch, error, poolsForToken, gfxClient, activeNetwork.id])
+  }, [address, dispatch, error, poolsForToken, dataClient, activeNetwork.id])
 
   // return data
   return poolsForToken

@@ -4,8 +4,7 @@ import gql from 'graphql-tag'
 import { useClients } from 'state/application/hooks'
 import { notEmpty } from 'utils'
 import { POOL_HIDE } from '../../constants'
-import { TokensResponse, Pool } from '../../types'
-import { TOP_TOKENS_GFX } from '../protocol/topTokens'
+import { Pool } from '../../types'
 
 export const TOP_POOLS = gql`
   query topPools {
@@ -57,8 +56,6 @@ export function useTopPoolAddresses(): {
   }
 }
 
-// TODO: add GFX API call below
-
 interface TopPoolsResponseGfx {
   pools: Pool[]
 }
@@ -88,8 +85,6 @@ export async function fetchTopPools(client: ApolloClient<NormalizedCacheObject>)
       query: TOP_POOLS_GFX,
       fetchPolicy: 'cache-first',
     })
-
-    console.log('gql response:', data)
 
     if (error || loading || !data) {
       return undefined
