@@ -27,3 +27,9 @@ export const formatTime = (unix: string, buffer?: number) => {
     return `${inSeconds} ${inSeconds === 1 ? 'second' : 'seconds'} ago`
   }
 }
+
+export const convertDate = (dateStr: string): string => {
+  const date = new Date(dateStr)
+  const timestampInSeconds = Math.floor(date.getTime() / 1000)
+  return timestampInSeconds.toString()
+}

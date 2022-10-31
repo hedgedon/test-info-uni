@@ -62,7 +62,7 @@ interface TopPoolsResponseGfx {
 
 export const TOP_POOLS_GFX = gql`
   query Pools {
-    pools {
+    pools(limit: 50) {
       id
       feeTier
       token0 {

@@ -1,14 +1,15 @@
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import gql from 'graphql-tag'
 import { PoolData, TransactionType, TransactionTest } from 'types'
+import { convertDate } from 'utils/date'
 
-// TODO: update EXAMPLE QUERY
-const POOL_TRANSACTIONS_TEST = gql`
+const POOL_TRANSACTIONS_GFX = gql`
   query pool($id: String!) {
-    pool(limit: 69, filter: { id: $id, metadataFilter: { block: 12404681 } }) {
+    pool(filter: { id: $id }) {
       id
       createdAtBlockNumber
       liquidity
+      feeTier
       token0 {
         id
         symbol
@@ -107,7 +108,7 @@ export async function fetchPoolTransactionsGfx(
   loading: boolean
 }> {
   const { data, error, loading } = await client.query<PoolData>({
-    query: POOL_TRANSACTIONS_TEST,
+    query: POOL_TRANSACTIONS_GFX,
     variables: {
       id: address,
     },
@@ -137,7 +138,7 @@ export async function fetchPoolTransactionsGfx(
     return {
       type: TransactionType.MINT,
       hash: m.id,
-      timestamp: m.timestamp,
+      timestamp: convertDate(m.timestamp),
       sender: m.sender,
       token0Symbol: m.token0.symbol,
       token1Symbol: m.token1.symbol,
@@ -153,7 +154,7 @@ export async function fetchPoolTransactionsGfx(
     return {
       type: TransactionType.SWAP,
       hash: m.id,
-      timestamp: m.timestamp,
+      timestamp: convertDate(m.timestamp),
       // sender: m.sender,
       sender: m.recipient,
       token0Symbol: m.token0.symbol,
@@ -170,7 +171,7 @@ export async function fetchPoolTransactionsGfx(
     return {
       type: TransactionType.BURN,
       hash: m.id,
-      timestamp: m.timestamp,
+      timestamp: convertDate(m.timestamp),
       sender: m.owner, // owner is sender here.
       token0Symbol: m.token0.symbol,
       token1Symbol: m.token1.symbol,

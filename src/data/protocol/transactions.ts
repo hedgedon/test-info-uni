@@ -2,6 +2,7 @@ import { ApolloClient, NormalizedCacheObject } from '@apollo/client'
 import gql from 'graphql-tag'
 import { Transaction, TransactionType, Burn, Swap, Mint } from 'types'
 import { formatTokenSymbol } from 'utils/tokens'
+import { convertDate } from 'utils/date'
 
 const GLOBAL_TRANSACTIONS = gql`
   query transactions {
@@ -289,12 +290,6 @@ const GLOBAL_TRANSACTIONS_GFX = gql`
     }
   }
 `
-
-const convertDate = (dateStr: string): string => {
-  const date = new Date(dateStr)
-  const timestampInSeconds = Math.floor(date.getTime() / 1000)
-  return timestampInSeconds.toString()
-}
 
 export async function fetchTopTransactionsGfx(
   client: ApolloClient<NormalizedCacheObject>

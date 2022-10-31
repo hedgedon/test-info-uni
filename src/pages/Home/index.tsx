@@ -53,9 +53,6 @@ export default function Home() {
   const [protocolData] = useProtocolData()
   const [transactions] = useProtocolTransactions()
   const [transactionsGfx] = useProtocolTransactionsGfx()
-  if (transactionsGfx) {
-    console.log('transactions from gfx::', transactionsGfx)
-  }
 
   const [topTokens] = useProtocolTopTokensGfx()
   if (topTokens) {
